@@ -9,6 +9,7 @@ import { registerUser, errorHandler, verifyToken } from 'lib-common-service';
 import { FINANCE_API } from './constants.js';
 
 // Routes
+import routes from './routes/index.js';
 
 const app = express();
 
@@ -40,6 +41,7 @@ const tokenKey = process.env.ACCESS_TOKEN_KEY;
 app.use(verifyToken(tokenKey));
 
 // Finance Routes
+app.post(`${FINANCE_API}/register-category`, routes.categoryRoutes.registerNewCategory);
 
 app.use(errorHandler);
 
