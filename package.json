@@ -1,0 +1,50 @@
+{
+  "name": "finance-svc",
+  "version": "1.0.0",
+  "description": "Wallet watcher finance service to handle all user finance related operations",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayushya100/wallet-watcher-finance-svc-.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "finance-svc"
+  ],
+  "author": "Ayushya Jaiswal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ayushya100/wallet-watcher-finance-svc-/issues"
+  },
+  "homepage": "https://github.com/Ayushya100/wallet-watcher-finance-svc-#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.45",
+    "mongoose": "^8.2.4",
+    "mongoose-aggregate-paginate-v2": "^1.0.7",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "randombytes": "^2.1.0",
+    "util": "^0.12.5",
+    "uuid": "^9.0.1",
+    "validator": "^13.11.0"
+  }
+}
