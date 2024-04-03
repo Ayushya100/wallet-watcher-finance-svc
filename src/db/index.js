@@ -4,12 +4,14 @@ import {
     isCategoryByNameAvailable,
     createNewCategory,
     getAllCategoryInfo,
-    getCategoryInfoById
+    getCategoryInfoById,
+    getCategoryInfoByType
 } from './finance.db.js';
 
 export default {
     isCategoryByNameAvailable,
     createNewCategory,
     getAllCategoryInfo,
-    getCategoryInfoById
+    getCategoryInfoById,
+    getCategoryInfoByType
 };
