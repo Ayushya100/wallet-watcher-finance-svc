@@ -43,6 +43,41 @@ const getAllCategoryInfo = async(userId) => {
     }
 }
 
+const getCategoryInfoById = async(userId, categoryId) => {
+    registerLog.createDebugLog('Start retrieving all category information by id');
+
+    try {
+        log.info('Execution for retrieving category informations for specific id started');
+        log.info(`Call db query to retrieve category information of the user by category id : ${userId}`);
+        const categoryInfo = await dbConnect.getCategoryInfoById(userId, categoryId);
+
+        if (categoryInfo.length === 0) {
+            log.error('No category information found in database');
+            return {
+                resType: 'NOT_FOUND',
+                resMsg: 'No category details found',
+                isValid: false
+            };
+        }
+        log.info('Execution for retrieving category informations by id completed successfully');
+        return {
+            resType: 'SUCCESS',
+            resMsg: 'Category details found.',
+            data: categoryInfo,
+            isValid: true
+        };
+    } catch (err) {
+        log.error('Error while working with db to retrieve the category info by id');
+        return {
+            resType: 'INTERNAL_SERVER_ERROR',
+            resMsg: 'Some error occurred while working with db.',
+            stack: err.stack,
+            isValid: false
+        };
+    }
+}
+
 export {
-    getAllCategoryInfo
+    getAllCategoryInfo,
+    getCategoryInfoById
 };
