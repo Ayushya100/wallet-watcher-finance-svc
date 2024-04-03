@@ -2,6 +2,7 @@
 
 import { buildApiResponse, responseCodes, logger, createNewLog } from 'lib-common-service';
 import controller from '../../controllers/index.js';
+import { checkUserById } from '../../utils/index.js';
 
 const header = 'route: register-category';
 const msg = 'Register New Category Router started';
@@ -22,24 +23,32 @@ const registerNewCategory = async(req, res, next) => {
         const isValidPayload = categoryController.validateNewCategoryPayload(payload);
 
         if (isValidPayload.isValid) {
-            log.info('Call controller function to check category already exists');
-            const isCategoryFound = await categoryController.isCategoryByNameExists(payload);
+            log.info('Call controller function to check if user exists');
+            const isUserValid = await checkUserById(payload.userId, req);
 
-            if (isCategoryFound.isValid) {
-                log.info('Call controller function to create new category in database');
-                const newCategoryDetails = await categoryController.registerNewCategory(payload);
-
-                if (newCategoryDetails.isValid) {
-                    res.status(responseCodes[newCategoryDetails.resType]).json(
-                        buildApiResponse(newCategoryDetails)
-                    );
+            if (isUserValid.isValid) {
+                log.info('Call controller function to check category already exists');
+                const isCategoryFound = await categoryController.isCategoryByNameExists(payload);
+    
+                if (isCategoryFound.isValid) {
+                    log.info('Call controller function to create new category in database');
+                    const newCategoryDetails = await categoryController.registerNewCategory(payload);
+    
+                    if (newCategoryDetails.isValid) {
+                        res.status(responseCodes[newCategoryDetails.resType]).json(
+                            buildApiResponse(newCategoryDetails)
+                        );
+                    } else {
+                        log.error('Error while creating new category in db');
+                        return next(newCategoryDetails);
+                    }
                 } else {
-                    log.error('Error while creating new category in db');
-                    return next(newCategoryDetails);
+                    log.error('Error while checking for existing record');
+                    return next(isCategoryFound);
                 }
             } else {
-                log.error('Error while checking for existing record');
-                return next(isCategoryFound);
+                log.error('Error while checking for existing user');
+                return next(isUserValid);
             }
         } else {
             log.error('Error while validating the payload');

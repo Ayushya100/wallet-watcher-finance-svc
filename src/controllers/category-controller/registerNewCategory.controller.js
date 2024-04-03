@@ -3,7 +3,7 @@
 import dbConnect from '../../db/index.js';
 import { logger, createNewLog } from 'lib-common-service';
 
-const header = 'controller: register-controller';
+const header = 'controller: register-category';
 
 const log = logger(header);
 const registerLog = createNewLog(header);
