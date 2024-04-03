@@ -4,40 +4,40 @@ import { buildApiResponse, responseCodes, logger, createNewLog } from 'lib-commo
 import controller from '../../controllers/index.js';
 import { checkUserById } from '../../utils/index.js';
 
-const header = 'route: get-category-by-id';
-const msg = 'Get Category By Id Router started';
+const header = 'route: get-category-by-type';
+const msg = 'Get Category By Type Router started';
 
 const log = logger(header);
 const registerLog = createNewLog(header);
 const categoryController = controller.categoryController;
 
 // API Function
-const getCategoryInfoById = async(req, res, next) => {
+const getCategoryByType = async(req, res, next) => {
     log.info(msg);
     registerLog.createInfoLog(msg);
 
     try {
-        const categoryId = req.params.id;
+        const categoryType = req.params.type;
         const userId = req.body.userId;
 
         log.info('Call payload validator');
-        const isValidPayload = categoryController.validateUserExistsPayload(userId);
-
+        const isValidPayload = categoryController.validateGetCategoryByIdPayload(userId, categoryType);
+        
         if (isValidPayload.isValid) {
             log.info('Call external service - accounts svc to check if user exists');
             const isUserValid = await checkUserById(userId, req);
 
             if (isUserValid.isValid) {
-                log.info('Call controller function to get category information by id');
-                const categoryInfo = await categoryController.getCategoryInfoById(userId, categoryId);
+                log.info('Call controller function to get category information by type');
+                const categoryInfo = await categoryController.getCategoryInfoByType(userId, categoryType);
     
                 if (categoryInfo.isValid) {
-                    registerLog.createInfoLog('Successfully retrieved category info by id', null, categoryInfo);
+                    registerLog.createInfoLog('Successfully retrieved category info by type', null, categoryInfo);
                     res.status(responseCodes[categoryInfo.resType]).json(
                         buildApiResponse(categoryInfo)
                     );
                 } else {
-                    log.error('Error while retrieving category info by id');
+                    log.error('Error while retrieving category info by type');
                     return next(categoryInfo);
                 }
             } else {
@@ -48,7 +48,7 @@ const getCategoryInfoById = async(req, res, next) => {
             log.error('Error while validating the payload');
             return next(isValidPayload);
         }
-    } catch (err) {
+    } catch(err) {
         log.error('Internal Error occurred while working with router functions');
         next({
             resType: 'INTERNAL_SERVER_ERROR',
@@ -59,4 +59,4 @@ const getCategoryInfoById = async(req, res, next) => {
     }
 }
 
-export default getCategoryInfoById;
+export default getCategoryByType;

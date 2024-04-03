@@ -44,6 +44,7 @@ app.use(verifyToken(tokenKey));
 app.post(`${FINANCE_API}/register-category`, routes.categoryRoutes.registerNewCategory);
 app.get(`${FINANCE_API}/get-all-category`, routes.categoryRoutes.getAllCategoryInfo);
 app.get(`${FINANCE_API}/get-category-by-id/:id`, routes.categoryRoutes.getCategoryInfoById);
+app.get(`${FINANCE_API}/get-category-by-type/:type`, routes.categoryRoutes.getCategoryByType);
 
 app.use(errorHandler);
 
