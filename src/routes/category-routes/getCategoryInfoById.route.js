@@ -4,19 +4,20 @@ import { buildApiResponse, responseCodes, logger, createNewLog } from 'lib-commo
 import controller from '../../controllers/index.js';
 import { checkUserById } from '../../utils/index.js';
 
-const header = 'route: get-all-category-info';
-const msg = 'Get All Category Info Router started';
+const header = 'route: get-category-info-by-id';
+const msg = 'Get Category Info By Id Router started';
 
 const log = logger(header);
 const registerLog = createNewLog(header);
 const categoryController = controller.categoryController;
 
 // API Function
-const getAllCategoryInfo = async(req, res, next) => {
+const getCategoryInfoById = async(req, res, next) => {
     log.info(msg);
     registerLog.createInfoLog(msg);
 
     try {
+        const categoryId = req.params.id;
         const userId = req.body.userId;
 
         log.info('Call payload validator');
@@ -27,17 +28,16 @@ const getAllCategoryInfo = async(req, res, next) => {
             const isUserValid = await checkUserById(userId, req);
 
             if (isUserValid.isValid) {
-                log.info('Call controller function to get all category info');
-                const allCategoryInfo = await categoryController.getAllCategoryInfo(userId);
+                const categoryInfo = await categoryController.getCategoryInfoById(userId, categoryId);
     
-                if (allCategoryInfo.isValid) {
-                    registerLog.createInfoLog('Successfully retrieved all category informations', null, allCategoryInfo);
-                    res.status(responseCodes[allCategoryInfo.resType]).json(
-                        buildApiResponse(allCategoryInfo)
+                if (categoryInfo.isValid) {
+                    registerLog.createInfoLog('Successfully retrieved category info by id', null, categoryInfo);
+                    res.status(responseCodes[categoryInfo.resType]).json(
+                        buildApiResponse(categoryInfo)
                     );
                 } else {
-                    log.error('Error while retrieving all category informations');
-                    return next(allCategoryInfo);
+                    log.error('Error while retrieving category info by id');
+                    return next(categoryInfo);
                 }
             } else {
                 log.error('Error while checking for existing user');
@@ -58,4 +58,4 @@ const getAllCategoryInfo = async(req, res, next) => {
     }
 }
 
-export default getAllCategoryInfo;
+export default getCategoryInfoById;
