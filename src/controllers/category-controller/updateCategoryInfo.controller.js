@@ -19,7 +19,7 @@ const updateCategoryInfo = async(categoryId, payload) => {
         log.info('Execution for updating the category information started');
         payload.categoryName = capitalizeFirstLetter(payload.categoryName);
 
-        log.info(`Call db query to update category information of the user : ${categoryId}`);
+        log.info(`Call db query to update category information of the user : ${payload.userId}`);
         const updatedCategoryInfo = await dbConnect.updateCategoryName(categoryId, payload);
 
         if (updatedCategoryInfo.length === 0) {

@@ -13,6 +13,7 @@ import {
     getCategoryInfoByType
 } from './getCategoryInfo.controller.js';
 import { updateCategoryInfo } from './updateCategoryInfo.controller.js';
+import { deleteCategory } from './deleteCategory.route.js';
 
 export default {
     validateNewCategoryPayload,
@@ -24,5 +25,6 @@ export default {
     getAllCategoryInfo,
     getCategoryInfoById,
     getCategoryInfoByType,
-    updateCategoryInfo
+    updateCategoryInfo,
+    deleteCategory
 };

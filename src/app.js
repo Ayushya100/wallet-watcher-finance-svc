@@ -46,6 +46,7 @@ app.get(`${FINANCE_API}/get-all-category`, routes.categoryRoutes.getAllCategoryI
 app.get(`${FINANCE_API}/get-category-by-id/:id`, routes.categoryRoutes.getCategoryInfoById);
 app.get(`${FINANCE_API}/get-category-by-type/:type`, routes.categoryRoutes.getCategoryByType);
 app.put(`${FINANCE_API}/update-category/:id`, routes.categoryRoutes.updateCategoryInfo);
+app.delete(`${FINANCE_API}/delete-category/:id`, routes.categoryRoutes.deleteCategory);
 
 app.use(errorHandler);
 
