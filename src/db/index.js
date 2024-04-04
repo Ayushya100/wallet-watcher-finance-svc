@@ -6,7 +6,8 @@ import {
     getAllCategoryInfo,
     getCategoryInfoById,
     getCategoryInfoByType,
-    updateCategoryName
+    updateCategoryName,
+    deleteCategoryById
 } from './finance.db.js';
 
 export default {
@@ -15,5 +16,6 @@ export default {
     getAllCategoryInfo,
     getCategoryInfoById,
     getCategoryInfoByType,
-    updateCategoryName
+    updateCategoryName,
+    deleteCategoryById
 };

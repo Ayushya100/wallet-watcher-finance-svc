@@ -80,11 +80,35 @@ const updateCategoryName = async(categoryId, payload) => {
     return await executeQuery(updatedCategoryDetails);
 }
 
+const deleteCategoryById = async(userId, categoryId) => {
+    const updatedCategoryDetails = UserWalletCategoryModel.findOneAndUpdate(
+        {
+            _id: categoryId,
+            userId: userId,
+            isDeleted: false
+        },
+        {
+            $set: {
+                isDeleted: true,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'userId categoryName categoryType isDeleted'
+    );
+    return await executeQuery(updatedCategoryDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
     getAllCategoryInfo,
     getCategoryInfoById,
     getCategoryInfoByType,
-    updateCategoryName
+    updateCategoryName,
+    deleteCategoryById
 };
