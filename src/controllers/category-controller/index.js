@@ -3,7 +3,8 @@
 import {
     validateNewCategoryPayload,
     validateUserExistsPayload,
-    validateGetCategoryByIdPayload
+    validateGetCategoryByIdPayload,
+    validateUpdateCategoryPayload
 } from './validatePayload.controller.js';
 import { isCategoryByNameExists, registerNewCategory } from './registerNewCategory.controller.js';
 import {
@@ -11,14 +12,17 @@ import {
     getCategoryInfoById,
     getCategoryInfoByType
 } from './getCategoryInfo.controller.js';
+import { updateCategoryInfo } from './updateCategoryInfo.controller.js';
 
 export default {
     validateNewCategoryPayload,
     validateUserExistsPayload,
     validateGetCategoryByIdPayload,
+    validateUpdateCategoryPayload,
     isCategoryByNameExists,
     registerNewCategory,
     getAllCategoryInfo,
     getCategoryInfoById,
-    getCategoryInfoByType
+    getCategoryInfoByType,
+    updateCategoryInfo
 };

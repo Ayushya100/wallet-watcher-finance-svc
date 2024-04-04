@@ -45,6 +45,7 @@ app.post(`${FINANCE_API}/register-category`, routes.categoryRoutes.registerNewCa
 app.get(`${FINANCE_API}/get-all-category`, routes.categoryRoutes.getAllCategoryInfo);
 app.get(`${FINANCE_API}/get-category-by-id/:id`, routes.categoryRoutes.getCategoryInfoById);
 app.get(`${FINANCE_API}/get-category-by-type/:type`, routes.categoryRoutes.getCategoryByType);
+app.put(`${FINANCE_API}/update-category/:id`, routes.categoryRoutes.updateCategoryInfo);
 
 app.use(errorHandler);
 
