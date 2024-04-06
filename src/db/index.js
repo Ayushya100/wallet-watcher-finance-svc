@@ -9,9 +9,13 @@ import {
     updateCategoryName,
     deleteCategoryById,
     getCategoryInfoByIdAndType,
+    getUserFinanceById,
+    updateUserFinance,
     createNewIncomeRecord,
     updateCardAmount,
-    deleteIncomeRecord
+    deleteIncomeRecord,
+    createNewInvestmentRecord,
+    deleteInvestmentRecord
 } from './finance.db.js';
 
 export default {
@@ -23,7 +27,11 @@ export default {
     updateCategoryName,
     deleteCategoryById,
     getCategoryInfoByIdAndType,
+    getUserFinanceById,
+    updateUserFinance,
     createNewIncomeRecord,
     updateCardAmount,
-    deleteIncomeRecord
+    deleteIncomeRecord,
+    createNewInvestmentRecord,
+    deleteInvestmentRecord
 };

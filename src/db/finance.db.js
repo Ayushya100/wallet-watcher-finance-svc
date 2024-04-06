@@ -3,8 +3,10 @@
 // Add DB Models
 import {
     UserWalletCategoryModel,
+    UserFinanceModel,
     IncDetailsModel,
     CardInfoModel,
+    InvDetailsModel,
     executeQuery
 } from 'lib-common-service';
 
@@ -120,6 +122,39 @@ const getCategoryInfoByIdAndType = async(userId, categoryId, categoryType) => {
     return await executeQuery(categoryDetails);
 }
 
+const getUserFinanceById = async(userId) => {
+    const financeDetails = UserFinanceModel.find({
+        userId: userId
+    }).select(
+        'availableFunds lifeTimeIncome lifeTimeInvestment lifeTimeExpenditure'
+    );
+    return await executeQuery(financeDetails);
+}
+
+const updateUserFinance = async(userId, financeDetails) => {
+    const updatedFinanceDetails = UserFinanceModel.findByIdAndUpdate(
+        {
+            _id: financeDetails._id
+        },
+        {
+            $set: {
+                availableFunds: financeDetails.availableFunds,
+                lifeTimeIncome: financeDetails.lifeTimeIncome,
+                lifeTimeInvestment: financeDetails.lifeTimeInvestment,
+                lifeTimeExpenditure: financeDetails.lifeTimeExpenditure,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'userId balance isActive isDeleted'
+    );
+    return await executeQuery(updatedFinanceDetails);
+}
+
 const createNewIncomeRecord = async(payload) => {
     const incomeDetails = await IncDetailsModel.create({
         userId: payload.userId,
@@ -165,6 +200,29 @@ const deleteIncomeRecord = async(incomeId, userId) => {
     return await executeQuery(incomeDetails);
 }
 
+const createNewInvestmentRecord = async(payload) => {
+    const investmentDetails = await InvDetailsModel.create({
+        userId: payload.userId,
+        categoryId: payload.categoryId,
+        investmentAccToken: payload.investmentAccToken,
+        cardToken: payload.cardToken,
+        amount: payload.amount,
+        detail: payload.detail,
+        transactionDate: payload.transactionDate
+    });
+    return investmentDetails;
+}
+
+const deleteInvestmentRecord = async(investmentId, userId) => {
+    const investmentDetails = InvDetailsModel.deleteOne(
+        {
+            _id: investmentId,
+            userId: userId
+        }
+    );
+    return await executeQuery(investmentDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -174,7 +232,11 @@ export {
     updateCategoryName,
     deleteCategoryById,
     getCategoryInfoByIdAndType,
+    getUserFinanceById,
+    updateUserFinance,
     createNewIncomeRecord,
     updateCardAmount,
-    deleteIncomeRecord
+    deleteIncomeRecord,
+    createNewInvestmentRecord,
+    deleteInvestmentRecord
 };
