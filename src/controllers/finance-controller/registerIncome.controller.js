@@ -27,7 +27,7 @@ const registerIncomeDetail = async(payload) => {
     }
 }
 
-const registerIncome = async(payload, cardData) => {
+const registerIncome = async(payload) => {
     registerLog.createDebugLog('Start registering income');
 
     try {
@@ -35,7 +35,7 @@ const registerIncome = async(payload, cardData) => {
         const registerdIncomeDetail = await registerIncomeDetail(payload);
 
         if (registerdIncomeDetail) {
-            const cardDetails = await financeController.updateCardAmount(payload, cardData, 'INCOME');
+            const cardDetails = await financeController.updateCardAmount(payload, 'INCOME');
             
             if (cardDetails) {
                 log.info('Execution completed for adding income record and updating card amount');

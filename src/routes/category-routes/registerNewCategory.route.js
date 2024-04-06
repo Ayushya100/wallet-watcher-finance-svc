@@ -43,7 +43,7 @@ const registerNewCategory = async(req, res, next) => {
             throw newCategoryDetails;
         }
     
-        registerLog.createInfoLog('Successfully registered new category', null, updatedInfo);
+        registerLog.createInfoLog('Successfully registered new category', null, newCategoryDetails);
         res.status(responseCodes[newCategoryDetails.resType]).json(
             buildApiResponse(newCategoryDetails)
         );

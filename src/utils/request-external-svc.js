@@ -87,7 +87,15 @@ const checkCardByToken = async(userId, cardToken, req) => {
     return await sendRequest(url, 'GET', null, accessToken);
 }
 
+const checkInvAccountByToken = async(userId, accountToken, req) => {
+    initializeSvc('accounts-svc', '3200');
+    const url = `users/${userId}/get-account-info/${accountToken}`;
+    const accessToken = req.cookies?.accessToken;
+    return await sendRequest(url, 'GET', null, accessToken);
+}
+
 export {
     checkUserById,
-    checkCardByToken
+    checkCardByToken,
+    checkInvAccountByToken
 };

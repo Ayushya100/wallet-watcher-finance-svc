@@ -14,7 +14,7 @@ const validateProvidedDate = (enteredDate) => {
     return enteredDate <= currentDate;
 }
 
-const validateNewIncomePayload = (payload) => {
+const validateGeneralPayload = (payload) => {
     let response = {
         resType: 'SUCCESS',
         resMsg: 'VALIDATION SUCCESSFULL',
@@ -35,6 +35,11 @@ const validateNewIncomePayload = (payload) => {
             }
         }
     }
+    return response;
+}
+
+const validateNewIncomePayload = (payload) => {
+    let response = validateGeneralPayload(payload);
 
     if (payload.transactionDate && !validateProvidedDate(payload.transactionDate)) {
         response.resType = 'BAD_REQUEST';
@@ -46,6 +51,26 @@ const validateNewIncomePayload = (payload) => {
     return response;
 }
 
+const validateNewIinvestmentPayload = (payload) => {
+    let response = validateGeneralPayload(payload);
+
+    if (!payload.investmentAccToken) {
+        response.resType = 'BAD_REQUEST';
+        response.resMsg = 'Required parameter is missing: Investment Account Token';
+        response.isValid = false;
+    }
+
+    if (payload.transactionDate && !validateProvidedDate(payload.transactionDate)) {
+        response.resType = 'BAD_REQUEST';
+        response.resMsg = 'Investment date cannot be future date!';
+        response.isValid = false;
+    }
+
+    returnValidationConfirmation();
+    return response;
+}
+
 export {
-    validateNewIncomePayload
+    validateNewIncomePayload,
+    validateNewIinvestmentPayload
 };

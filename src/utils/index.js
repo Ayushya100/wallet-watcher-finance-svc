@@ -2,10 +2,12 @@
 
 import {
     checkUserById,
-    checkCardByToken
+    checkCardByToken,
+    checkInvAccountByToken
 } from './request-external-svc.js';
 
 export {
     checkUserById,
-    checkCardByToken
+    checkCardByToken,
+    checkInvAccountByToken
 };

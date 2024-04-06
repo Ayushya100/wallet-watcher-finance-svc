@@ -1,7 +1,9 @@
 'use strict';
 
 import registerIncome from './registerIncome.route.js';
+import registerInvestment from './registerInvestment.route.js';
 
 export default {
-    registerIncome
+    registerIncome,
+    registerInvestment
 };

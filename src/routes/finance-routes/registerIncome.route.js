@@ -9,7 +9,6 @@ const msg = 'Register New Income Router started';
 
 const log = logger(header);
 const registerLog = createNewLog(header);
-const categoryController = controller.categoryController;
 const financeController = controller.financeController;
 
 // API Function
@@ -51,9 +50,10 @@ const registerIncome = async(req, res, next) => {
                 isValid: false
             };
         }
+        payload.cardBalance = isCardAvailable.data.balance;
 
         log.info('Call controller function to register new income');
-        const isIncomeRegistered = await financeController.registerIncome(payload, isCardAvailable.data);
+        const isIncomeRegistered = await financeController.registerIncome(payload);
         if (!isIncomeRegistered.isValid) {
             throw isIncomeRegistered;
         }
