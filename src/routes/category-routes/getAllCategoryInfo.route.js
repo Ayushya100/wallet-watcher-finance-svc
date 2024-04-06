@@ -21,40 +21,33 @@ const getAllCategoryInfo = async(req, res, next) => {
 
         log.info('Call payload validator');
         const isValidPayload = categoryController.validateUserExistsPayload(userId);
-
-        if (isValidPayload.isValid) {
-            log.info('Call external service - accounts svc to check if user exists');
-            const isUserValid = await checkUserById(userId, req);
-
-            if (isUserValid.isValid) {
-                log.info('Call controller function to get all category info');
-                const allCategoryInfo = await categoryController.getAllCategoryInfo(userId);
-    
-                if (allCategoryInfo.isValid) {
-                    registerLog.createInfoLog('Successfully retrieved all category informations', null, allCategoryInfo);
-                    res.status(responseCodes[allCategoryInfo.resType]).json(
-                        buildApiResponse(allCategoryInfo)
-                    );
-                } else {
-                    log.error('Error while retrieving all category informations');
-                    return next(allCategoryInfo);
-                }
-            } else {
-                log.error('Error while checking for existing user');
-                return next(isUserValid);
-            }
-        } else {
-            log.error('Error while validating the payload');
-            return next(isValidPayload);
+        if (!isValidPayload.isValid) {
+            throw isValidPayload;
         }
+
+        log.info('Call external service - accounts svc to check if user exists');
+        const isUserValid = await checkUserById(userId, req);
+        if (!isUserValid.isValid) {
+            throw isUserValid;
+        }
+
+        log.info('Call controller function to get all category info');
+        const allCategoryInfo = await categoryController.getAllCategoryInfo(userId);
+        if (!allCategoryInfo.isValid) {
+            throw allCategoryInfo;
+        }
+
+        registerLog.createInfoLog('Successfully retrieved all category informations', null, allCategoryInfo);
+        res.status(responseCodes[allCategoryInfo.resType]).json(
+            buildApiResponse(allCategoryInfo)
+        );
     } catch (err) {
-        log.error('Internal Error occurred while working with router functions');
-        next({
-            resType: 'INTERNAL_SERVER_ERROR',
-            resMsg: err,
-            stack: err.stack,
-            isValid: false
-        });
+        if (err.resType === 'INTERNAL_SERVER_ERROR') {
+            log.error('Internal Error occurred while working with router functions');
+        } else {
+            log.error(`Error occurred : ${err.resMsg}`);
+        }
+        next(err);
     }
 }
 
