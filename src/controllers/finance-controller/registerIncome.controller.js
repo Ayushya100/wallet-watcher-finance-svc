@@ -32,23 +32,23 @@ const registerIncome = async(payload) => {
 
     try {
         log.info('Execution for registering income started');
-        const registerdIncomeDetail = await registerIncomeDetail(payload);
+        const registeredIncomeDetail = await registerIncomeDetail(payload);
 
-        if (registerdIncomeDetail) {
+        if (registeredIncomeDetail) {
             const cardDetails = await financeController.updateCardAmount(payload, 'INCOME');
             
             if (cardDetails) {
                 log.info('Execution completed for adding income record and updating card amount');
                 return {
                     resType: 'REQUEST_COMPLETED',
-                    resMsg: 'New category has been added successfully.',
-                    data: registerdIncomeDetail,
+                    resMsg: 'New income record has been registered successfully.',
+                    data: registeredIncomeDetail,
                     isValid: true
                 };
             } else {
                 log.info('Revert the transaction as failed to update card amount');
                 log.info('Call db query to revert the transaction');
-                const incomeDetail = await dbConnect.deleteIncomeRecord(registerdIncomeDetail._id, registerdIncomeDetail.userId);
+                const incomeDetail = await dbConnect.deleteIncomeRecord(registeredIncomeDetail._id, registeredIncomeDetail.userId);
                 
                 log.info('Transaction revertion completed');
                 return {

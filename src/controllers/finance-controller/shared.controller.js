@@ -59,6 +59,10 @@ const updateCardAmount = async(payload, type) => {
             userFinance.availableFunds = Number(userFinance.availableFunds) - Number(payload.amount);
             userFinance.lifeTimeInvestment = Number(userFinance.lifeTimeInvestment) + Number(payload.amount);
             payload.amount = Number(payload.cardBalance) - Number(payload.amount);
+        } else if (type === 'EXPENSE') {
+            userFinance.availableFunds = Number(userFinance.availableFunds) - Number(payload.amount);
+            userFinance.lifeTimeExpenditure = Number(userFinance.lifeTimeExpenditure) + Number(payload.amount);
+            payload.amount = Number(payload.cardBalance) - Number(payload.amount);
         }
 
         log.info('Call db query to update card amount in database');
