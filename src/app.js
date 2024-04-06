@@ -40,13 +40,16 @@ app.use(registerUser);
 const tokenKey = process.env.ACCESS_TOKEN_KEY;
 app.use(verifyToken(tokenKey));
 
-// Finance Routes
+// Category Routes
 app.post(`${FINANCE_API}/register-category`, routes.categoryRoutes.registerNewCategory);
 app.get(`${FINANCE_API}/get-all-category`, routes.categoryRoutes.getAllCategoryInfo);
 app.get(`${FINANCE_API}/get-category-by-id/:id`, routes.categoryRoutes.getCategoryInfoById);
 app.get(`${FINANCE_API}/get-category-by-type/:type`, routes.categoryRoutes.getCategoryByType);
 app.put(`${FINANCE_API}/update-category/:id`, routes.categoryRoutes.updateCategoryInfo);
 app.delete(`${FINANCE_API}/delete-category/:id`, routes.categoryRoutes.deleteCategory);
+
+// Finance Routes
+app.post(`${FINANCE_API}/register-income`, routes.financeRoutes.registerIncome);
 
 app.use(errorHandler);
 

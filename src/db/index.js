@@ -7,7 +7,11 @@ import {
     getCategoryInfoById,
     getCategoryInfoByType,
     updateCategoryName,
-    deleteCategoryById
+    deleteCategoryById,
+    getCategoryInfoByIdAndType,
+    createNewIncomeRecord,
+    updateCardAmount,
+    deleteIncomeRecord
 } from './finance.db.js';
 
 export default {
@@ -17,5 +21,9 @@ export default {
     getCategoryInfoById,
     getCategoryInfoByType,
     updateCategoryName,
-    deleteCategoryById
+    deleteCategoryById,
+    getCategoryInfoByIdAndType,
+    createNewIncomeRecord,
+    updateCardAmount,
+    deleteIncomeRecord
 };

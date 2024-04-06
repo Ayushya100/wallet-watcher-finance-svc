@@ -1,7 +1,12 @@
 'use strict';
 
 // Add DB Models
-import { UserWalletCategoryModel, executeQuery } from 'lib-common-service';
+import {
+    UserWalletCategoryModel,
+    IncDetailsModel,
+    CardInfoModel,
+    executeQuery
+} from 'lib-common-service';
 
 const isCategoryByNameAvailable = async(payload) => {
     const categoryDetails = UserWalletCategoryModel.findOne({
@@ -103,6 +108,63 @@ const deleteCategoryById = async(userId, categoryId) => {
     return await executeQuery(updatedCategoryDetails);
 }
 
+const getCategoryInfoByIdAndType = async(userId, categoryId, categoryType) => {
+    const categoryDetails = UserWalletCategoryModel.find({
+        _id: categoryId,
+        userId: userId,
+        categoryType: categoryType,
+        isDeleted: false
+    }).select(
+        'categoryName categoryType'
+    );
+    return await executeQuery(categoryDetails);
+}
+
+const createNewIncomeRecord = async(payload) => {
+    const incomeDetails = await IncDetailsModel.create({
+        userId: payload.userId,
+        categoryId: payload.categoryId,
+        cardToken: payload.cardToken,
+        amount: payload.amount,
+        detail: payload.detail,
+        transactionDate: payload.transactionDate
+    });
+    return incomeDetails;
+}
+
+const updateCardAmount = async(userId, cardToken, amount) => {
+    const updatedCategoryDetails = CardInfoModel.findOneAndUpdate(
+        {
+            token: cardToken,
+            isActive: true,
+            isDeleted: false
+        },
+        {
+            $set: {
+                balance: amount,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'userId balance isActive isDeleted'
+    );
+    return await executeQuery(updatedCategoryDetails);
+}
+
+const deleteIncomeRecord = async(incomeId, userId) => {
+    const incomeDetails = IncDetailsModel.deleteOne(
+        {
+            _id: incomeId,
+            userId: userId
+        }
+    );
+    return await executeQuery(incomeDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -110,5 +172,9 @@ export {
     getCategoryInfoById,
     getCategoryInfoByType,
     updateCategoryName,
-    deleteCategoryById
+    deleteCategoryById,
+    getCategoryInfoByIdAndType,
+    createNewIncomeRecord,
+    updateCardAmount,
+    deleteIncomeRecord
 };

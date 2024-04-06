@@ -44,6 +44,7 @@ const sendRequest = async(svcUrl, method, payload = null, accessToken = null, js
             response = {
                 statusCode: res.data.statusCode,
                 message: res.data.message,
+                data: res.data.data,
                 isValid: res.data.success
             };
         }).catch(err => {
@@ -79,6 +80,14 @@ const checkUserById = async(userId, req) => {
     return response;
 }
 
+const checkCardByToken = async(userId, cardToken, req) => {
+    initializeSvc('accounts-svc', '3200');
+    const url = `users/${userId}/get-card-info/${cardToken}`;
+    const accessToken = req.cookies?.accessToken;
+    return await sendRequest(url, 'GET', null, accessToken);
+}
+
 export {
-    checkUserById
+    checkUserById,
+    checkCardByToken
 };
