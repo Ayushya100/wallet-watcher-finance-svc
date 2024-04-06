@@ -23,7 +23,7 @@ const registerNewCategory = async(req, res, next) => {
         const isValidPayload = categoryController.validateNewCategoryPayload(payload);
 
         if (isValidPayload.isValid) {
-            log.info('Call controller function to check if user exists');
+            log.info('Call external service - accounts svc to check if user exists');
             const isUserValid = await checkUserById(payload.userId, req);
 
             if (isUserValid.isValid) {
@@ -35,6 +35,7 @@ const registerNewCategory = async(req, res, next) => {
                     const newCategoryDetails = await categoryController.registerNewCategory(payload);
     
                     if (newCategoryDetails.isValid) {
+                        registerLog.createInfoLog('Successfully registered new category', null, updatedInfo);
                         res.status(responseCodes[newCategoryDetails.resType]).json(
                             buildApiResponse(newCategoryDetails)
                         );
