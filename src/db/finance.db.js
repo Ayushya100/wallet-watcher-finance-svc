@@ -7,6 +7,8 @@ import {
     IncDetailsModel,
     CardInfoModel,
     InvDetailsModel,
+    ExpDetailsModel,
+    CrdExpDetailsModel,
     executeQuery
 } from 'lib-common-service';
 
@@ -223,6 +225,50 @@ const deleteInvestmentRecord = async(investmentId, userId) => {
     return await executeQuery(investmentDetails);
 }
 
+const createNewExpenseRecord = async(payload) => {
+    const expenseDetails = await ExpDetailsModel.create({
+        userId: payload.userId,
+        categoryId: payload.categoryId,
+        cardToken: payload.cardToken,
+        amount: payload.amount,
+        detail: payload.detail,
+        transactionDate: payload.transactionDate
+    });
+    return expenseDetails;
+}
+
+const createNewCrdExpenseRecord = async(payload) => {
+    const expenseDetails = await CrdExpDetailsModel.create({
+        userId: payload.userId,
+        categoryId: payload.categoryId,
+        cardToken: payload.cardToken,
+        amount: payload.amount,
+        detail: payload.detail,
+        transactionDate: payload.transactionDate
+    });
+    return expenseDetails;
+}
+
+const deleteExpenseRecord = async(expenseId, userId) => {
+    const expenseDetails = ExpDetailsModel.deleteOne(
+        {
+            _id: expenseId,
+            userId: userId
+        }
+    );
+    return await executeQuery(expenseDetails);
+}
+
+const deleteCrdExpenseRecord = async(expenseId, userId) => {
+    const expenseDetails = CrdExpDetailsModel.deleteOne(
+        {
+            _id: expenseId,
+            userId: userId
+        }
+    );
+    return await executeQuery(expenseDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -238,5 +284,9 @@ export {
     updateCardAmount,
     deleteIncomeRecord,
     createNewInvestmentRecord,
-    deleteInvestmentRecord
+    deleteInvestmentRecord,
+    createNewExpenseRecord,
+    createNewCrdExpenseRecord,
+    deleteExpenseRecord,
+    deleteCrdExpenseRecord
 };

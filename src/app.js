@@ -51,6 +51,7 @@ app.delete(`${FINANCE_API}/delete-category/:id`, routes.categoryRoutes.deleteCat
 // Finance Routes
 app.post(`${FINANCE_API}/register-income`, routes.financeRoutes.registerIncome);
 app.post(`${FINANCE_API}/register-investment`, routes.financeRoutes.registerInvestment);
+app.post(`${FINANCE_API}/register-expense`, routes.financeRoutes.registerExpense);
 
 app.use(errorHandler);
 

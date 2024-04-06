@@ -15,7 +15,11 @@ import {
     updateCardAmount,
     deleteIncomeRecord,
     createNewInvestmentRecord,
-    deleteInvestmentRecord
+    deleteInvestmentRecord,
+    createNewExpenseRecord,
+    createNewCrdExpenseRecord,
+    deleteExpenseRecord,
+    deleteCrdExpenseRecord
 } from './finance.db.js';
 
 export default {
@@ -33,5 +37,9 @@ export default {
     updateCardAmount,
     deleteIncomeRecord,
     createNewInvestmentRecord,
-    deleteInvestmentRecord
+    deleteInvestmentRecord,
+    createNewExpenseRecord,
+    createNewCrdExpenseRecord,
+    deleteExpenseRecord,
+    deleteCrdExpenseRecord
 };

@@ -48,7 +48,7 @@ const registerInvestment = async(payload) => {
             if (cardDetails) {
                 return {
                     resType: 'REQUEST_COMPLETED',
-                    resMsg: 'New category has been added successfully.',
+                    resMsg: 'New Investment record has been registered successfully.',
                     data: registeredInvestmentDetail,
                     isValid: true
                 };
