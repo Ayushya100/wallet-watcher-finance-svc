@@ -5,9 +5,11 @@ import {
     checkCardByToken,
     checkInvAccountByToken
 } from './request-external-svc.js';
+import { buildProjectFields } from './buildFilterFields.js';
 
 export {
     checkUserById,
     checkCardByToken,
-    checkInvAccountByToken
+    checkInvAccountByToken,
+    buildProjectFields
 };
