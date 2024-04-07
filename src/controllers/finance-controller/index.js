@@ -10,6 +10,7 @@ import { registerInvestment } from './registerInvestment.controller.js';
 import { registerExpense } from './registerExpense.controller.js';
 import { getAllIncomeRecords, getIncomeInfoById } from './getIncomeInfo.controller.js';
 import { getAllInvestmentRecords, getInvestmentInfoById } from './getInvestmentInfo.controller.js';
+import { getAllExpenseInfo, getExpenseInfoById } from './getExpenseInfo.controller.js';
 
 export default {
     validateNewIncomePayload,
@@ -22,5 +23,7 @@ export default {
     getAllIncomeRecords,
     getIncomeInfoById,
     getAllInvestmentRecords,
-    getInvestmentInfoById
+    getInvestmentInfoById,
+    getAllExpenseInfo,
+    getExpenseInfoById
 };
