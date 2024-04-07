@@ -63,7 +63,7 @@ const getIncomeInfoById = async(userId, recordId, filter) => {
                 isValid: false
             };
         }
-        log.info('Execution for retrieving all income records completed successfully');
+        log.info('Execution for retrieving income records by id completed successfully');
         return {
             resType: 'SUCCESS',
             resMsg: 'Income Records retrieved successfully',

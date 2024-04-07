@@ -56,6 +56,8 @@ app.get(`${FINANCE_API}/get-income-info`, routes.financeRoutes.getIncomeInfo);
 app.get(`${FINANCE_API}/get-income-info/:id`, routes.financeRoutes.getIncomeInfo);
 app.get(`${FINANCE_API}/get-investment-info`, routes.financeRoutes.getInvestmentInfo);
 app.get(`${FINANCE_API}/get-investment-info/:id`, routes.financeRoutes.getInvestmentInfo);
+app.get(`${FINANCE_API}/get-expense-info/:type`, routes.financeRoutes.getExpenseInfo);
+app.get(`${FINANCE_API}/get-expense-info/:type/:id`, routes.financeRoutes.getExpenseInfo);
 
 app.use(errorHandler);
 

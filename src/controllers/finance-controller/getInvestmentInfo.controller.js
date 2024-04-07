@@ -63,7 +63,7 @@ const getInvestmentInfoById = async(userId, recordId, filter) => {
                 isValid: false
             };
         }
-        log.info('Execution for retrieving all investment records completed successfully');
+        log.info('Execution for retrieving investment record by id completed successfully');
         return {
             resType: 'SUCCESS',
             resMsg: 'Investment Records retrieved successfully',
