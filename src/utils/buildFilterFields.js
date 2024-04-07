@@ -20,6 +20,21 @@ const allFields = (type) => {
             cardNumber: 1,
             categoryName: 1
         };
+    } else if (type === 'INVESTMENT') {
+        return {
+            userId: 1,
+            categoryId: 1,
+            investmentAccToken: 1,
+            cardToken: 1,
+            amount: 1,
+            detail: 1,
+            transactionDate: 1,
+            createdOn: 1,
+            modifiedOn: 1,
+            cardNumber: 1,
+            categoryName: 1,
+            accountNumber: 1
+        };
     }
 }
 
