@@ -8,6 +8,7 @@ import { getCategoryInfoByIdAndType, updateCardAmount } from './shared.controlle
 import { registerIncome } from './registerIncome.controller.js';
 import { registerInvestment } from './registerInvestment.controller.js';
 import { registerExpense } from './registerExpense.controller.js';
+import { getAllIncomeRecords, getIncomeInfoById } from './getIncomeInfo.controller.js';
 
 export default {
     validateNewIncomePayload,
@@ -16,5 +17,7 @@ export default {
     updateCardAmount,
     registerIncome,
     registerInvestment,
-    registerExpense
+    registerExpense,
+    getAllIncomeRecords,
+    getIncomeInfoById
 };

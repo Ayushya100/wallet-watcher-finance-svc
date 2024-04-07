@@ -21,6 +21,9 @@ import {
     deleteExpenseRecord,
     deleteCrdExpenseRecord
 } from './finance.db.js';
+import {
+    getIncomeRecords
+} from './financeRecords.db.js';
 
 export default {
     isCategoryByNameAvailable,
@@ -41,5 +44,6 @@ export default {
     createNewExpenseRecord,
     createNewCrdExpenseRecord,
     deleteExpenseRecord,
-    deleteCrdExpenseRecord
+    deleteCrdExpenseRecord,
+    getIncomeRecords
 };
