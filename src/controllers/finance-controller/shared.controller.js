@@ -101,6 +101,10 @@ const revertCardAmount = async(payload, type) => {
             userFinance.availableFunds = Number(userFinance.availableFunds) - Number(payload.amount);
             userFinance.lifeTimeIncome = Number(userFinance.lifeTimeIncome) - Number(payload.amount);
             payload.amount = Number(payload.cardBalance) - Number(payload.amount);
+        } else if (type === 'INVESTMENT') {
+            userFinance.availableFunds = Number(userFinance.availableFunds) + Number(payload.amount);
+            userFinance.lifeTimeInvestment = Number(userFinance.lifeTimeInvestment) - Number(payload.amount);
+            payload.amount = Number(payload.cardBalance) + Number(payload.amount);
         }
 
         return updateUserCardAndFinance(payload.userId, payload.cardToken, payload.amount, userFinance);

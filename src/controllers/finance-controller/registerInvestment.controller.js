@@ -43,9 +43,11 @@ const registerInvestment = async(payload) => {
         const registeredInvestmentDetail = await registerInvestmentDetail(payload);
 
         if (registeredInvestmentDetail) {
+            const updatedAccountAmt = Number(payload.accountAmount) + Number(payload.amount);
             const cardDetails = await financeController.updateCardAmount(payload, 'INVESTMENT');
 
             if (cardDetails) {
+                await dbConnect.updateInvAccountAmount(payload.userId, payload.investmentAccToken, updatedAccountAmt);
                 return {
                     resType: 'REQUEST_COMPLETED',
                     resMsg: 'New Investment record has been registered successfully.',

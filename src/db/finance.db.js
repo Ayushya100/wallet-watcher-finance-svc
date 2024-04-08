@@ -9,6 +9,7 @@ import {
     InvDetailsModel,
     ExpDetailsModel,
     CrdExpDetailsModel,
+    InvestmentAccInfoModel,
     executeQuery
 } from 'lib-common-service';
 
@@ -215,6 +216,28 @@ const createNewInvestmentRecord = async(payload) => {
     return investmentDetails;
 }
 
+const updateInvAccountAmount = async(userId, accountToken, amount) => {
+    const updatedAccountInfo = InvestmentAccInfoModel.findOneAndUpdate(
+        {
+            token: accountToken,
+            userId: userId
+        },
+        {
+            $set: {
+                amount: amount,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'accountName accountNumber accountDate holderName amount'
+    );
+    return await executeQuery(updatedAccountInfo);
+}
+
 const deleteInvestmentRecord = async(investmentId, userId) => {
     const investmentDetails = InvDetailsModel.deleteOne(
         {
@@ -291,6 +314,28 @@ const revertIncomeRecord = async(userId, recordId) => {
     return await executeQuery(incomeDetails);
 }
 
+const revertInvestmentRecord = async(userId, recordId) => {
+    const investmentDetails = InvDetailsModel.findOneAndUpdate(
+        {
+            _id: recordId,
+            userId: userId
+        },
+        {
+            $set: {
+                isDeleted: true,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'amount detail transactionDate'
+    );
+    return await executeQuery(investmentDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -311,5 +356,7 @@ export {
     createNewCrdExpenseRecord,
     deleteExpenseRecord,
     deleteCrdExpenseRecord,
-    revertIncomeRecord
+    updateInvAccountAmount,
+    revertIncomeRecord,
+    revertInvestmentRecord
 };
