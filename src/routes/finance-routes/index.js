@@ -7,6 +7,7 @@ import getIncomeInfo from './getIncomeInfo.route.js';
 import getInvestmentInfo from './getInvestmentInfo.route.js';
 import getExpenseInfo from './getExpenseInfo.route.js';
 import deleteIncome from './deleteIncome.route.js';
+import deleteInvestment from './deleteInvestment.route.js';
 
 export default {
     registerIncome,
@@ -15,5 +16,6 @@ export default {
     getIncomeInfo,
     getInvestmentInfo,
     getExpenseInfo,
-    deleteIncome
+    deleteIncome,
+    deleteInvestment
 };

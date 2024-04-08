@@ -18,6 +18,7 @@ const isIncomeRecordAvailable = async(userId, recordId) => {
 
         if (financeInfo.data) {
             financeInfo = financeInfo.data[0];
+            log.info('Execution for retrieving user income record completed successfully');
             return {
                 resType: 'SUCCESS',
                 resMsg: 'Successfully retrieved the requested income record',
@@ -29,7 +30,7 @@ const isIncomeRecordAvailable = async(userId, recordId) => {
         log.error('No such income record exists in database');
         return financeInfo;
     } catch (err) {
-        log.error('Error while working with db to check if income records');
+        log.error('Error while working with db to check if income records exists');
         return {
             resType: 'INTERNAL_SERVER_ERROR',
             resMsg: 'Some error occurred while working with db.',
