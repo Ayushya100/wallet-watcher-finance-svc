@@ -58,6 +58,7 @@ app.get(`${FINANCE_API}/get-investment-info`, routes.financeRoutes.getInvestment
 app.get(`${FINANCE_API}/get-investment-info/:id`, routes.financeRoutes.getInvestmentInfo);
 app.get(`${FINANCE_API}/get-expense-info/:type`, routes.financeRoutes.getExpenseInfo);
 app.get(`${FINANCE_API}/get-expense-info/:type/:id`, routes.financeRoutes.getExpenseInfo);
+app.put(`${FINANCE_API}/delete-income/:id`, routes.financeRoutes.deleteIncome);
 
 app.use(errorHandler);
 

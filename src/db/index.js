@@ -19,7 +19,8 @@ import {
     createNewExpenseRecord,
     createNewCrdExpenseRecord,
     deleteExpenseRecord,
-    deleteCrdExpenseRecord
+    deleteCrdExpenseRecord,
+    revertIncomeRecord
 } from './finance.db.js';
 import {
     getIncomeRecords,
@@ -48,6 +49,7 @@ export default {
     createNewCrdExpenseRecord,
     deleteExpenseRecord,
     deleteCrdExpenseRecord,
+    revertIncomeRecord,
     getIncomeRecords,
     getInvestmentRecords,
     getExpenseRecords,
