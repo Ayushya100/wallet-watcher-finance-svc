@@ -269,6 +269,28 @@ const deleteCrdExpenseRecord = async(expenseId, userId) => {
     return await executeQuery(expenseDetails);
 }
 
+const revertIncomeRecord = async(userId, recordId) => {
+    const incomeDetails = IncDetailsModel.findOneAndUpdate(
+        {
+            _id: recordId,
+            userId: userId
+        },
+        {
+            $set: {
+                isDeleted: true,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'amount detail transactionDate'
+    );
+    return await executeQuery(incomeDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -288,5 +310,6 @@ export {
     createNewExpenseRecord,
     createNewCrdExpenseRecord,
     deleteExpenseRecord,
-    deleteCrdExpenseRecord
+    deleteCrdExpenseRecord,
+    revertIncomeRecord
 };

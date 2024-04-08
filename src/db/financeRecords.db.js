@@ -41,12 +41,6 @@ const getIncomeRecords = async(userId, recordId = null, fieldsToDisplay) => {
           }
       },
       {
-          $match: {
-              'cardResult.isDeleted': false,
-              'categoryResult.isDeleted': false
-          }
-      },
-      {
           $addFields: {
               cardNumber: {
                   $arrayElemAt: ['$cardResult.cardNumber', 0]
@@ -98,13 +92,6 @@ const getInvestmentRecords = async(userId, recordId = null, fieldsToDisplay) => 
           localField: 'investmentAccToken',
           foreignField: 'token',
           as: 'accountResult'
-        }
-      },
-      {
-        $match: {
-          'cardResult.isDeleted': false,
-          'categoryResult.isDeleted': false,
-          'accountResult.isDeleted': false
         }
       },
       {

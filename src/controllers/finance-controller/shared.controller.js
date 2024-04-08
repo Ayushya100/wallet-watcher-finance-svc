@@ -43,6 +43,23 @@ const getCategoryInfoByIdAndType = async(userId, categoryId, categoryType) => {
     }
 }
 
+const updateUserCardAndFinance = async(userId, cardToken, amount, userFinance) => {
+    try {
+        log.info('Call db query to update card amount in database');
+        const updateAmount = await dbConnect.updateCardAmount(userId, cardToken, amount);
+        log.info('Call db query to update user finance details');
+        await dbConnect.updateUserFinance(userId, userFinance);
+        if (updateAmount) {
+            log.info('Execution for updating card amount completed successfully');
+            return true;
+        }
+        log.error('Error while updating the card amount in database');
+        return false;
+    } catch (err) {
+        return false;
+    }
+}
+
 const updateCardAmount = async(payload, type) => {
     registerLog.createDebugLog('Start updating card amount');
 
@@ -65,23 +82,36 @@ const updateCardAmount = async(payload, type) => {
             payload.amount = Number(payload.cardBalance) - Number(payload.amount);
         }
 
-        log.info('Call db query to update card amount in database');
-        const updateAmount = await dbConnect.updateCardAmount(payload.userId, payload.cardToken, payload.amount);
-        log.info('Call db query to update user finance details');
-        await dbConnect.updateUserFinance(payload.userId, userFinance);
-        if (updateAmount) {
-            log.info('Execution for updating card amount completed successfully');
-            return true;
-        }
-        log.error('Error while updating the card amount in database');
-        return false;
+        return updateUserCardAndFinance(payload.userId, payload.cardToken, payload.amount, userFinance);
     } catch (err) {
         log.error('Error while working with db to update card amount');
         return false;
     }
 }
 
+const revertCardAmount = async(payload, type) => {
+    registerLog.createDebugLog('Start reverting card amount');
+
+    try {
+        log.info('Execution for reverting card amount started');
+        log.info('Call db query to get the current user finance details');
+        let userFinance = await dbConnect.getUserFinanceById(payload.userId);
+        userFinance = userFinance[0];
+        if (type === 'INCOME') {
+            userFinance.availableFunds = Number(userFinance.availableFunds) - Number(payload.amount);
+            userFinance.lifeTimeIncome = Number(userFinance.lifeTimeIncome) - Number(payload.amount);
+            payload.amount = Number(payload.cardBalance) - Number(payload.amount);
+        }
+
+        return updateUserCardAndFinance(payload.userId, payload.cardToken, payload.amount, userFinance);
+    } catch (err) {
+        log.error('Error while working with db to revert card amount');
+        return false;
+    }
+}
+
 export {
     getCategoryInfoByIdAndType,
-    updateCardAmount
+    updateCardAmount,
+    revertCardAmount
 };
