@@ -17,6 +17,7 @@ import { getAllInvestmentRecords, getInvestmentInfoById } from './getInvestmentI
 import { getAllExpenseInfo, getExpenseInfoById } from './getExpenseInfo.controller.js';
 import { isIncomeRecordAvailable, deleteIncome } from './deleteIncome.controller.js';
 import { isInvestmentRecordAvailable, deleteInvestment } from './deleteInvestment.controller.js';
+import { isExpenseRecordAvailable, deleteExpense } from './deleteExpense.controller.js';
 
 export default {
     validateNewIncomePayload,
@@ -36,5 +37,7 @@ export default {
     isIncomeRecordAvailable,
     deleteIncome,
     isInvestmentRecordAvailable,
-    deleteInvestment
+    deleteInvestment,
+    isExpenseRecordAvailable,
+    deleteExpense
 };
