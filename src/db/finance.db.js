@@ -336,6 +336,50 @@ const revertInvestmentRecord = async(userId, recordId) => {
     return await executeQuery(investmentDetails);
 }
 
+const revertExpenseRecord = async(userId, recordId) => {
+    const expenseDetails = ExpDetailsModel.findOneAndUpdate(
+        {
+            _id: recordId,
+            userId: userId
+        },
+        {
+            $set: {
+                isDeleted: true,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'amount detail transactionDate'
+    );
+    return await executeQuery(expenseDetails);
+}
+
+const revertCreditExpenseRecord = async(userId, recordId) => {
+    const expenseDetails = CrdExpDetailsModel.findOneAndUpdate(
+        {
+            _id: recordId,
+            userId: userId
+        },
+        {
+            $set: {
+                isDeleted: true,
+                modifiedOn: Date.now(),
+                modifiedBy: userId
+            }
+        },
+        {
+            new: true
+        }
+    ).select(
+        'amount detail transactionDate'
+    );
+    return await executeQuery(expenseDetails);
+}
+
 export {
     isCategoryByNameAvailable,
     createNewCategory,
@@ -358,5 +402,7 @@ export {
     deleteCrdExpenseRecord,
     updateInvAccountAmount,
     revertIncomeRecord,
-    revertInvestmentRecord
+    revertInvestmentRecord,
+    revertExpenseRecord,
+    revertCreditExpenseRecord
 };

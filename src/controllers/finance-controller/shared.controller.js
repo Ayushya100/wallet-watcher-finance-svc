@@ -56,6 +56,7 @@ const updateUserCardAndFinance = async(userId, cardToken, amount, userFinance) =
         log.error('Error while updating the card amount in database');
         return false;
     } catch (err) {
+        log.error('Error while working with db to update card amount');
         return false;
     }
 }
@@ -104,6 +105,10 @@ const revertCardAmount = async(payload, type) => {
         } else if (type === 'INVESTMENT') {
             userFinance.availableFunds = Number(userFinance.availableFunds) + Number(payload.amount);
             userFinance.lifeTimeInvestment = Number(userFinance.lifeTimeInvestment) - Number(payload.amount);
+            payload.amount = Number(payload.cardBalance) + Number(payload.amount);
+        } else if (type === 'EXPENSE') {
+            userFinance.availableFunds = Number(userFinance.availableFunds) + Number(payload.amount);
+            userFinance.lifeTimeExpenditure = Number(userFinance.lifeTimeExpenditure) - Number(payload.amount);
             payload.amount = Number(payload.cardBalance) + Number(payload.amount);
         }
 
